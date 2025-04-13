@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "368488960916",
+    "project_id": "smashin-b2ee8",
+    "storage_bucket": "smashin-b2ee8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368488960916:android:0ee10274ae68c7197eb581",
+        "android_client_info": {
+          "package_name": "com.example.smashinfluter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD8Px1Fhw7T_90Pdl6cDaICWkah1Aw2Tc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
