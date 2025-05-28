@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'graj.dart';
-import 'turniej.dart';
-import 'grupy.dart';
+import 'package:smashinfluter/profiledit/profiledit.dart';
+import 'package:smashinfluter/Strony/graj.dart';
+import 'package:smashinfluter/Strony/turniej/turniej.dart';
+import 'package:smashinfluter/Strony/notatka/Notatka.dart';
 import '../logowanie/profil.dart';
+import 'package:smashinfluter/style/styl.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -49,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
-        backgroundColor: const Color.fromARGB(140, 1, 128, 239),
+        backgroundColor: AppColor.background,
         actions: [
           IconButton(
             onPressed: _showProfilePage,
@@ -58,7 +60,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: Drawer(
-        backgroundColor: const Color.fromARGB(255, 0, 75, 141),
+          backgroundColor: AppColor.background.withAlpha(255),
         child: Column(
           
           children: [
@@ -74,20 +76,20 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pop(context);
               },
             ),
-            const ListTile(
+            ListTile(
               title: Text('Profil'),
-              onTap: null,
-            ),
-            const ListTile(
-              title: Text('Korty'),
-              onTap: null,
+              onTap: () { Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PeditPage()),
+              );}
+              ,
             ),
           ],
         )
       ),
       body: _selectedIndex == -1 ? _profilePage : _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromARGB(140, 1, 128, 239),
+        backgroundColor: AppColor.background,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.sports_tennis),

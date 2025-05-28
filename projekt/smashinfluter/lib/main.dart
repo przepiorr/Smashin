@@ -19,6 +19,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(200, 1, 128, 239)), // ← domyślna paleta
+        useMaterial3: true,
+        ),
       home: ProfilPage(),
     );
   }

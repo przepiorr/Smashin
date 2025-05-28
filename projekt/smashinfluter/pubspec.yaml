@@ -63,7 +63,7 @@ flutter_launcher_icons:
 # following page: https://dart.dev/tools/pub/pubspec
 flutter_native_splash:
   color: "#006595"  # Kolor tła
-  image: assets/image.png  # Logo aplikacji
+  image: assets/logo.png  # Logo aplikacji
   android: true
   ios: true
   fullscreen: true
@@ -72,6 +72,10 @@ flutter:
   assets:
     - assets/logo.png
     - assets/image.png
+    - assets/images/1.jpg
+    - assets/images/uderzenia.jpg
+    - assets/images/kort.jpg
+    - assets/images/rakieta.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

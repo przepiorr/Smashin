@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smashinfluter/style/button.dart';
+import 'package:smashinfluter/style/input.dart';
 class RegistrationPage extends StatefulWidget {
   @override
   _RegistrationPageState createState() => _RegistrationPageState();
@@ -15,26 +17,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    Color backcolor = Color(0x99D3D3D3);
-    Color bordercolor = Colors.blue; // Kolor ramk
 
-    InputDecoration dekoracjainput({
-      required String labelText,
-      required String hintText,
-    }) {
-      return InputDecoration(
-        filled: true,
-        fillColor: backcolor, // Subtelne tło
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: bordercolor, // Kolor ramki
-            width: 2.0, // Grubość ramki
-          ),
-        ),
-        labelText: labelText,
-        hintText: hintText,
-      );
-    }// i
+
+
+    // i
     return Scaffold(
       backgroundColor:Color(0xFF006595) ,
       body: Center(
@@ -57,6 +43,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   labelText: 'Login',
                   hintText: 'Podaj Login',
                 ),
+                 style: TextStyle(color: Colors.white),
               ),
               SizedBox(height: 16.0),
               TextField(
@@ -65,6 +52,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   labelText: 'Email',
                   hintText: 'Podaj Email',
                 ),
+                style: TextStyle(color: Colors.white),
               ),
               SizedBox(height: 16.0),
               TextField(
@@ -74,6 +62,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   labelText: 'Hasło',
                   hintText: 'Podaj hasło',
                 ),
+                style: TextStyle(color: Colors.white),
               ),
               SizedBox(height: 16.0),
               TextField(
@@ -83,6 +72,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   labelText: 'Potwierdz hasło',
                   hintText: 'Potwierdz hasło',
                 ),
+                style: TextStyle(color: Colors.white),
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
@@ -103,7 +93,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       fontSize: 16.0,
                     );
                 }},
+                style: dekoracjabutton(),
                 child: const Text('Zarejestruj'),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  },
+                style: dekoracjabutton(),
+                child: const Text('Cofnij'),
               ),
               
             ],

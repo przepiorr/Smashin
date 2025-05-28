@@ -3,62 +3,63 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smashinfluter/Strony/home.dart';
+import 'package:smashinfluter/logowanie/loading.dart';
 
 class AuthService {
 
   Future<void> signup({
-  required String email,
-  required String password,
-  required String login,
-  required BuildContext context
-}) async {
-  try {
-    var loginSnapshot = await FirebaseFirestore.instance.collection('users').where('login', isEqualTo: login).get();
-
-    if (loginSnapshot.docs.isNotEmpty) {
-
-      Fluttertoast.showToast(
-        msg: 'Login is already taken. Please choose another one.',
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
+    required String email,
+    required String password,
+    required String login,
+    required BuildContext context
+  }) async {
+    try {
+      //ekran ładowania
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => LoadingScreen(message: 'Rejestracja...'),
       );
-      return;
-    }
 
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).set({
-      'email': email,
-      'login': login,
-    });
-    await Future.delayed(const Duration(seconds: 1));
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomePage()),
-    );
-  } on FirebaseAuthException catch (e) {
-    String message = '';
-    if (e.code == 'weak-password') {
-      message = 'The password provided is too weak.';
-    } else if (e.code == 'email-already-in-use') {
-      message = 'An account already exists with that email.';
-    }
+      var loginSnapshot = await FirebaseFirestore.instance.collection('users')
+          .where('login', isEqualTo: login)
+          .get();
 
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.SNACKBAR,
-      backgroundColor: Colors.black54,
-      textColor: Colors.white,
-      fontSize: 14.0,
-    );
+      if (loginSnapshot.docs.isNotEmpty) {
+        Navigator.pop(context); // Ukryj ekran ładowania
+        Fluttertoast.showToast(msg: 'Login is already taken.');
+        return;
+      }
+
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      await FirebaseFirestore.instance.collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({
+        'email': email,
+        'login': login,
+      });
+
+      Navigator.pop(context); // Ukryj ekran ładowania
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => HomePage()),
+      );
+
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context); // Ukryj ekran ładowania przy błędzie
+      String message = e.code == 'weak-password'
+          ? 'The password provided is too weak.'
+          : e.code == 'email-already-in-use'
+          ? 'An account already exists with that email.'
+          : 'Błąd logowania';
+
+      Fluttertoast.showToast(msg: message);
+    }
   }
-}
 
 
   Future<void> signin({
@@ -66,37 +67,36 @@ class AuthService {
     required String password,
     required BuildContext context
   }) async {
-    
     try {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => LoadingScreen(message: 'Logowanie...'),
+      );
 
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
-        password: password
+        password: password,
       );
 
-       await Future.delayed(const Duration(seconds: 1));
-
-       Navigator.pushReplacement(
+      Navigator.pop(context); // zamknij ekran ładowania
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (_) => HomePage()),
       );
-    } on FirebaseAuthException catch(e) {
-      String message = '';
-      if (e.code == 'invalid-email') {
-        message = 'No user found for that email.';
-      } else if (e.code == 'invalid-credential') {
-        message = 'Wrong password provided for that user.';
-      }
-       Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 14.0,
-      );
+
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context); // zamknij ekran ładowania
+      String message = e.code == 'invalid-email'
+          ? 'No user found for that email.'
+          : e.code == 'invalid-credential'
+          ? 'Wrong password provided for that user.'
+          : 'Błąd logowania';
+
+      Fluttertoast.showToast(msg: message);
     }
   }
 
 
-  }
+
+}
